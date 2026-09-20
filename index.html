@@ -137,24 +137,44 @@
     <h1>More sins are coming.</h1>
     <p class="tagline">Leave your email. I'll find you when there's more to confess.</p>
     <form id="signup-form">
-      <input type="email" id="email" placeholder="your@email.com" required aria-label="Email address">
-      <button type="submit">I'M IN</button>
+      <input type="hidden" name="access_key" value="fad73789-4015-4282-bc64-0af2b4918f06">
+      <input type="hidden" name="subject" value="New confession signup">
+      <input type="checkbox" name="botcheck" style="display:none" tabindex="-1" autocomplete="off">
+      <input type="email" name="email" id="email" placeholder="your@email.com" required aria-label="Email address">
+      <button type="submit" id="submit-btn">I'M IN</button>
     </form>
     <p class="status" id="status"></p>
   </div>
 
   <script>
-    // NOTE: This form doesn't send anywhere yet. GitHub Pages can't run
-    // server code, so to actually collect emails you'll need to point this
-    // at a free form service like Formspree, Getform, or a Google Form.
-    // See the instructions Claude gave you for wiring it up.
     const form = document.getElementById('signup-form');
     const status = document.getElementById('status');
+    const submitBtn = document.getElementById('submit-btn');
 
-    form.addEventListener('submit', function (e) {
+    form.addEventListener('submit', async function (e) {
       e.preventDefault();
-      status.textContent = "Noted. We'll be in touch.";
-      form.reset();
+      submitBtn.disabled = true;
+      status.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form)))
+        });
+        const result = await res.json();
+
+        if (result.success) {
+          status.textContent = "Noted. We'll be in touch.";
+          form.reset();
+        } else {
+          status.textContent = 'Something went wrong. Try again.';
+        }
+      } catch (err) {
+        status.textContent = 'Something went wrong. Try again.';
+      } finally {
+        submitBtn.disabled = false;
+      }
     });
   </script>
 </body>
