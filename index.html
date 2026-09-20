@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>More Sins Are Coming</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0611;
+    --bg-mid: #241333;
+    --cream: #f3ecdf;
+    --lavender: #c3b7dd;
+    --lavender-dim: #9c8fb8;
+    --line: rgba(243, 236, 223, 0.18);
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    height: 100%;
+    margin: 0;
+  }
+
+  body {
+    background:
+      radial-gradient(ellipse 120% 90% at 50% 15%, var(--bg-mid) 0%, var(--bg-deep) 65%),
+      var(--bg-deep);
+    font-family: 'Inter', sans-serif;
+    color: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  .card {
+    width: 100%;
+    max-width: 720px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 7vw, 4.6rem);
+    line-height: 1.08;
+    margin: 0 0 28px;
+    color: var(--cream);
+    letter-spacing: -0.01em;
+  }
+
+  .tagline {
+    font-size: clamp(1rem, 2.3vw, 1.25rem);
+    color: var(--lavender);
+    font-weight: 400;
+    margin: 0 0 56px;
+    line-height: 1.5;
+  }
+
+  form {
+    display: flex;
+    align-items: center;
+    border-top: 1px solid var(--line);
+    padding-top: 22px;
+    gap: 16px;
+  }
+
+  input[type="email"] {
+    flex: 1;
+    background: transparent;
+    border: none;
+    outline: none;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    color: var(--cream);
+    padding: 10px 0;
+    min-width: 0;
+  }
+
+  input[type="email"]::placeholder {
+    color: var(--lavender-dim);
+  }
+
+  button {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid var(--lavender);
+    color: var(--lavender);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    padding: 12px 28px;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  button:hover,
+  button:focus-visible {
+    background: var(--lavender);
+    color: var(--bg-deep);
+  }
+
+  button:focus-visible {
+    outline: 2px solid var(--cream);
+    outline-offset: 2px;
+  }
+
+  .status {
+    margin-top: 16px;
+    font-size: 0.9rem;
+    color: var(--lavender-dim);
+    min-height: 1.2em;
+  }
+
+  @media (max-width: 480px) {
+    form {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 14px;
+    }
+    button { width: 100%; }
+    input[type="email"] { text-align: center; padding: 8px 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    button { transition: none; }
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <h1>More sins are coming.</h1>
+    <p class="tagline">Leave your email. I'll find you when there's more to confess.</p>
+    <form id="signup-form">
+      <input type="email" id="email" placeholder="your@email.com" required aria-label="Email address">
+      <button type="submit">I'M IN</button>
+    </form>
+    <p class="status" id="status"></p>
+  </div>
+
+  <script>
+    // NOTE: This form doesn't send anywhere yet. GitHub Pages can't run
+    // server code, so to actually collect emails you'll need to point this
+    // at a free form service like Formspree, Getform, or a Google Form.
+    // See the instructions Claude gave you for wiring it up.
+    const form = document.getElementById('signup-form');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      status.textContent = "Noted. We'll be in touch.";
+      form.reset();
+    });
+  </script>
+</body>
+</html>
